@@ -15,13 +15,14 @@ import {
 
 const nav = [
   { to: "/app", label: "Overview", icon: LayoutDashboard, exact: true },
-  { to: "/app/failed-payments", label: "Failed Payments", icon: CreditCard },
-  { to: "/app/checkouts", label: "Checkout Recovery", icon: ShoppingCart },
-  { to: "/app/subscriptions", label: "Subscriptions", icon: Repeat },
-  { to: "/app/receivables", label: "Receivables", icon: FileText },
-  { to: "/app/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/app/settings", label: "Settings", icon: Settings },
+  { to: "/app/failed-payments", label: "Failed Payments", icon: CreditCard, exact: false },
+  { to: "/app/checkouts", label: "Checkout Recovery", icon: ShoppingCart, exact: false },
+  { to: "/app/subscriptions", label: "Subscriptions", icon: Repeat, exact: false },
+  { to: "/app/receivables", label: "Receivables", icon: FileText, exact: false },
+  { to: "/app/analytics", label: "Analytics", icon: BarChart3, exact: false },
+  { to: "/app/settings", label: "Settings", icon: Settings, exact: false },
 ] as const;
+
 
 export function AppShell() {
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -147,7 +148,7 @@ export function AppShell() {
             {(["failed", "checkout", "subs", "receivables"] as PlanKey[]).map((key) => (
               <CommandItem key={key} onSelect={() => aiAction(key)} className="gap-2.5">
                 <Sparkles className="size-4 text-gold" />
-                <span>{recoveryPlans[key].subject}</span>
+                <span>{recoveryPlans[key]!.subject}</span>
                 <CommandShortcut>AI</CommandShortcut>
               </CommandItem>
             ))}
@@ -172,7 +173,7 @@ export function AppShell() {
       {planKey && (
         <AiPlanSheet
           planKey={planKey}
-          plan={recoveryPlans[planKey]}
+          plan={recoveryPlans[planKey]!}
           open={planKey !== null}
           onOpenChange={(o) => !o && setPlanKey(null)}
         />

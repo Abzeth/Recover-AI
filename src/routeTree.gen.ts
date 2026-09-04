@@ -13,9 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppCheckoutsRouteImport } from './routes/app.checkouts'
 import { Route as AppFailedPaymentsRouteImport } from './routes/app.failed-payments'
 import { Route as AppReceivablesRouteImport } from './routes/app.receivables'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppSubscriptionsRouteImport } from './routes/app.subscriptions'
 
 const IndexRoute = IndexRouteImport.update({
@@ -38,6 +40,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCheckoutsRoute = AppCheckoutsRouteImport.update({
   id: '/checkouts',
   path: '/checkouts',
@@ -53,6 +60,11 @@ const AppReceivablesRoute = AppReceivablesRouteImport.update({
   path: '/receivables',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSubscriptionsRoute = AppSubscriptionsRouteImport.update({
   id: '/subscriptions',
   path: '/subscriptions',
@@ -63,18 +75,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/analytics': typeof AppAnalyticsRoute
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/app/analytics': typeof AppAnalyticsRoute
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app': typeof AppIndexRoute
 }
@@ -83,9 +99,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/analytics': typeof AppAnalyticsRoute
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -95,18 +113,22 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/auth'
+    | '/app/analytics'
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/settings'
     | '/app/subscriptions'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/app/analytics'
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/settings'
     | '/app/subscriptions'
     | '/app'
   id:
@@ -114,9 +136,11 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/auth'
+    | '/app/analytics'
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/settings'
     | '/app/subscriptions'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -157,6 +181,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/analytics': {
+      id: '/app/analytics'
+      path: '/analytics'
+      fullPath: '/app/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/checkouts': {
       id: '/app/checkouts'
       path: '/checkouts'
@@ -178,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReceivablesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/subscriptions': {
       id: '/app/subscriptions'
       path: '/subscriptions'
@@ -189,17 +227,21 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppCheckoutsRoute: typeof AppCheckoutsRoute
   AppFailedPaymentsRoute: typeof AppFailedPaymentsRoute
   AppReceivablesRoute: typeof AppReceivablesRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppSubscriptionsRoute: typeof AppSubscriptionsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
   AppCheckoutsRoute: AppCheckoutsRoute,
   AppFailedPaymentsRoute: AppFailedPaymentsRoute,
   AppReceivablesRoute: AppReceivablesRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppSubscriptionsRoute: AppSubscriptionsRoute,
   AppIndexRoute: AppIndexRoute,
 }
