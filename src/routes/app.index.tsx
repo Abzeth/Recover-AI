@@ -62,22 +62,22 @@ function Overview() {
               <AreaChart data={recoveryTrend}>
                 <defs>
                   <linearGradient id="gRisk" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--destructive))" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="hsl(var(--destructive))" stopOpacity={0} />
+                    <stop offset="0%" stopColor="var(--destructive)" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="var(--destructive)" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gRec" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--gold))" stopOpacity={0.45} />
-                    <stop offset="100%" stopColor="hsl(var(--gold))" stopOpacity={0} />
+                    <stop offset="0%" stopColor="var(--gold)" stopOpacity={0.45} />
+                    <stop offset="100%" stopColor="var(--gold)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="day" stroke="currentColor" className="text-muted-foreground" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis stroke="currentColor" className="text-muted-foreground" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(Number(v) / 1000)}k`} />
                 <Tooltip
-                  contentStyle={{ background: "hsl(var(--popover))", border: "1px solid hsl(var(--border))", borderRadius: 10, fontSize: 12 }}
+                  contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 10, fontSize: 12 }}
                   formatter={(v) => inr(Number(v))}
                 />
-                <Area type="monotone" dataKey="atRisk" stroke="hsl(var(--destructive))" fill="url(#gRisk)" strokeWidth={2} />
-                <Area type="monotone" dataKey="recovered" stroke="hsl(var(--gold))" fill="url(#gRec)" strokeWidth={2} />
+                <Area type="monotone" dataKey="atRisk" stroke="var(--destructive)" fill="url(#gRisk)" strokeWidth={2} />
+                <Area type="monotone" dataKey="recovered" stroke="var(--gold)" fill="url(#gRec)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
