@@ -13,6 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppCheckoutsRouteImport } from './routes/app.checkouts'
+import { Route as AppFailedPaymentsRouteImport } from './routes/app.failed-payments'
+import { Route as AppReceivablesRouteImport } from './routes/app.receivables'
+import { Route as AppSubscriptionsRouteImport } from './routes/app.subscriptions'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,16 +38,44 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCheckoutsRoute = AppCheckoutsRouteImport.update({
+  id: '/checkouts',
+  path: '/checkouts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFailedPaymentsRoute = AppFailedPaymentsRouteImport.update({
+  id: '/failed-payments',
+  path: '/failed-payments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReceivablesRoute = AppReceivablesRouteImport.update({
+  id: '/receivables',
+  path: '/receivables',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSubscriptionsRoute = AppSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/checkouts': typeof AppCheckoutsRoute
+  '/app/failed-payments': typeof AppFailedPaymentsRoute
+  '/app/receivables': typeof AppReceivablesRoute
+  '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/app/checkouts': typeof AppCheckoutsRoute
+  '/app/failed-payments': typeof AppFailedPaymentsRoute
+  '/app/receivables': typeof AppReceivablesRoute
+  '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -51,14 +83,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/checkouts': typeof AppCheckoutsRoute
+  '/app/failed-payments': typeof AppFailedPaymentsRoute
+  '/app/receivables': typeof AppReceivablesRoute
+  '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/auth' | '/app/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/checkouts'
+    | '/app/failed-payments'
+    | '/app/receivables'
+    | '/app/subscriptions'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/app'
-  id: '__root__' | '/' | '/app' | '/auth' | '/app/'
+  to:
+    | '/'
+    | '/auth'
+    | '/app/checkouts'
+    | '/app/failed-payments'
+    | '/app/receivables'
+    | '/app/subscriptions'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/checkouts'
+    | '/app/failed-payments'
+    | '/app/receivables'
+    | '/app/subscriptions'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -97,14 +157,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/checkouts': {
+      id: '/app/checkouts'
+      path: '/checkouts'
+      fullPath: '/app/checkouts'
+      preLoaderRoute: typeof AppCheckoutsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/failed-payments': {
+      id: '/app/failed-payments'
+      path: '/failed-payments'
+      fullPath: '/app/failed-payments'
+      preLoaderRoute: typeof AppFailedPaymentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/receivables': {
+      id: '/app/receivables'
+      path: '/receivables'
+      fullPath: '/app/receivables'
+      preLoaderRoute: typeof AppReceivablesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/subscriptions': {
+      id: '/app/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/app/subscriptions'
+      preLoaderRoute: typeof AppSubscriptionsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppCheckoutsRoute: typeof AppCheckoutsRoute
+  AppFailedPaymentsRoute: typeof AppFailedPaymentsRoute
+  AppReceivablesRoute: typeof AppReceivablesRoute
+  AppSubscriptionsRoute: typeof AppSubscriptionsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppCheckoutsRoute: AppCheckoutsRoute,
+  AppFailedPaymentsRoute: AppFailedPaymentsRoute,
+  AppReceivablesRoute: AppReceivablesRoute,
+  AppSubscriptionsRoute: AppSubscriptionsRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
