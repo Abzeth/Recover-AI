@@ -17,6 +17,7 @@ import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppCheckoutsRouteImport } from './routes/app.checkouts'
 import { Route as AppFailedPaymentsRouteImport } from './routes/app.failed-payments'
 import { Route as AppReceivablesRouteImport } from './routes/app.receivables'
+import { Route as AppRecoveryRouteImport } from './routes/app.recovery'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppSubscriptionsRouteImport } from './routes/app.subscriptions'
 
@@ -60,6 +61,11 @@ const AppReceivablesRoute = AppReceivablesRouteImport.update({
   path: '/receivables',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRecoveryRoute = AppRecoveryRouteImport.update({
+  id: '/recovery',
+  path: '/recovery',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/recovery': typeof AppRecoveryRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/recovery': typeof AppRecoveryRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app': typeof AppIndexRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/app/checkouts': typeof AppCheckoutsRoute
   '/app/failed-payments': typeof AppFailedPaymentsRoute
   '/app/receivables': typeof AppReceivablesRoute
+  '/app/recovery': typeof AppRecoveryRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscriptions': typeof AppSubscriptionsRoute
   '/app/': typeof AppIndexRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/recovery'
     | '/app/settings'
     | '/app/subscriptions'
     | '/app/'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/recovery'
     | '/app/settings'
     | '/app/subscriptions'
     | '/app'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/app/checkouts'
     | '/app/failed-payments'
     | '/app/receivables'
+    | '/app/recovery'
     | '/app/settings'
     | '/app/subscriptions'
     | '/app/'
@@ -209,6 +221,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReceivablesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/recovery': {
+      id: '/app/recovery'
+      path: '/recovery'
+      fullPath: '/app/recovery'
+      preLoaderRoute: typeof AppRecoveryRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/settings': {
       id: '/app/settings'
       path: '/settings'
@@ -231,6 +250,7 @@ interface AppRouteChildren {
   AppCheckoutsRoute: typeof AppCheckoutsRoute
   AppFailedPaymentsRoute: typeof AppFailedPaymentsRoute
   AppReceivablesRoute: typeof AppReceivablesRoute
+  AppRecoveryRoute: typeof AppRecoveryRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppSubscriptionsRoute: typeof AppSubscriptionsRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -241,6 +261,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCheckoutsRoute: AppCheckoutsRoute,
   AppFailedPaymentsRoute: AppFailedPaymentsRoute,
   AppReceivablesRoute: AppReceivablesRoute,
+  AppRecoveryRoute: AppRecoveryRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppSubscriptionsRoute: AppSubscriptionsRoute,
   AppIndexRoute: AppIndexRoute,
