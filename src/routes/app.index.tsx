@@ -6,9 +6,12 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { recoveryPlans, type PlanKey } from "@/lib/ai-engine";
 import { auditLog, moduleSummary, recoveryTrend, failedPayments } from "@/lib/data";
 import { inr } from "@/lib/format";
+import { categoryCounts, funnel, monthImpact, resolvedBatch, riskBatch } from "@/lib/recovery-engine";
+import { RecoveryFunnel } from "@/components/RecoveryFunnel";
 import { Button } from "@/components/ui/button";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { ArrowUpRight, Sparkles, TrendingUp } from "lucide-react";
+
 
 export const Route = createFileRoute("/app/")({
   head: () => ({
@@ -27,6 +30,9 @@ function Overview() {
   const [planKey, setPlanKey] = useState<PlanKey | null>(null);
   const totalAtRisk = moduleSummary.reduce((a, m) => a + m.atRisk, 0);
   const totalRecoverable = moduleSummary.reduce((a, m) => a + m.recoverable, 0);
+  const batch = funnel(riskBatch);
+  const closed = funnel(resolvedBatch);
+
 
   return (
     <div className="mx-auto max-w-7xl">
