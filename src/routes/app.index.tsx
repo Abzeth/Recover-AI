@@ -31,16 +31,83 @@ function Overview() {
   return (
     <div className="mx-auto max-w-7xl">
       <PageHeader title="Recovery overview" sub="AI has analysed every revenue leak. Nothing executes without your approval.">
+        <Button asChild variant="outline">
+          <Link to="/app/recovery"><Sparkles className="size-4" /> Open closed-loop recovery run</Link>
+        </Button>
         <Button onClick={() => setPlanKey("failed")} className="bg-gold-gradient text-primary-foreground font-semibold shadow-gold hover:opacity-90">
           <Sparkles className="size-4" /> Review AI plan
         </Button>
       </PageHeader>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {/* THIS MONTH — verified business impact */}
+      <div className="rounded-xl border border-gold/25 bg-gold/5 p-5">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="font-display text-lg font-semibold">This month — business impact</h2>
+          <span className="text-xs text-muted-foreground">verified, reconciled batches · modeled estimates labelled separately</span>
+        </div>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {[
+            { label: "Revenue at risk", value: inr(monthImpact.atRisk), tag: "detected exposure", tone: "text-destructive" },
+            { label: "Recovered", value: inr(monthImpact.recovered), tag: "verified recovered", tone: "text-success" },
+            { label: "Recovery rate", value: `${monthImpact.recoveryRate.toFixed(1)}%`, tag: "recovered ÷ attempted", tone: "text-success" },
+            { label: "Recovery attempts", value: monthImpact.attempts.toLocaleString("en-IN"), tag: "bounded by policy", tone: "text-gold" },
+            { label: "Successful recoveries", value: monthImpact.successes.toLocaleString("en-IN"), tag: "closed workflows", tone: "text-gold" },
+            { label: "Revenue protected", value: inr(monthImpact.recovered), tag: "verified recovered — not a forecast", tone: "text-success" },
+          ].map((k) => (
+            <div key={k.label} className="rounded-lg border border-border bg-card p-4">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{k.label}</p>
+              <p className={`mt-1.5 font-display text-2xl font-semibold ${k.tone}`}>{k.value}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">{k.tag}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Without RecoverAI: <span className="text-destructive">{inr(monthImpact.atRisk)}</span> estimated loss (modeled) · With RecoverAI:{" "}
+          <span className="text-success">{inr(monthImpact.recovered)}</span> recovered (verified).
+        </p>
+      </div>
+
+      {/* Today's batch — live closed loop */}
+      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+        <div className="rounded-xl border border-border bg-card p-5 lg:col-span-2">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="font-display text-base font-semibold">Today's recovery queue</h2>
+            <Link to="/app/recovery" className="text-xs text-gold hover:underline">Run the loop →</Link>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {riskBatch.length} revenue-at-risk events · <span className="text-destructive">{inr(batch.atRisk)} at risk</span> ·{" "}
+            <span className="text-gold-dim">{inr(batch.estimatedRecovery)} estimated recoverable (modeled)</span>
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {categoryCounts(riskBatch).map((c) => (
+              <div key={c.category} className="flex items-baseline justify-between rounded-lg border border-border p-3 text-sm">
+                <span>{c.category}</span>
+                <span className="font-medium">{c.count} · <span className="text-destructive">{inr(c.atRisk)}</span></span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <h2 className="font-display text-base font-semibold">Latest closed batch</h2>
+          <div className="mt-4">
+            <RecoveryFunnel
+              steps={[
+                { label: "Revenue at risk", value: closed.atRisk, kind: "risk" },
+                { label: "Eligible for recovery", value: closed.estimatedRecovery, kind: "estimate" },
+                { label: "Recovery attempted", value: closed.attempted, kind: "attempt" },
+                { label: "Successfully recovered", value: closed.recovered, kind: "actual" },
+                { label: "Still outstanding", value: closed.outstanding, kind: "outstanding" },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: "Revenue at risk", value: inr(totalAtRisk), hint: "across 4 modules" },
-          { label: "AI-estimated recoverable", value: inr(totalRecoverable), hint: "if plans approved" },
-          { label: "Recovered this week", value: inr(280400), hint: "+18% vs last week" },
+          { label: "Module revenue at risk", value: inr(totalAtRisk), hint: "across 4 modules" },
+          { label: "AI-estimated recoverable", value: inr(totalRecoverable), hint: "modeled — needs approval" },
+          { label: "Recovered this week", value: inr(280400), hint: "verified, +18% vs last week" },
           { label: "Awaiting your approval", value: "6 plans", hint: "0 unapproved charges" },
         ].map((k) => (
           <div key={k.label} className="rounded-xl border border-border bg-card p-5">
@@ -50,6 +117,7 @@ function Overview() {
           </div>
         ))}
       </div>
+
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <div className="rounded-xl border border-border bg-card p-5 lg:col-span-2">
