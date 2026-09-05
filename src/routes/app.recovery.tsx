@@ -11,7 +11,7 @@ import {
   policyRows, resolvedBatch, riskBatch, stopReasonCounts, timelineFor, type RiskEvent,
 } from "@/lib/recovery-engine";
 import {
-  AlertTriangle, ArrowDown, Ban, Check, CircleDollarSign, Gauge, Loader2, OctagonX,
+  AlertTriangle, Ban, Check, CircleDollarSign, Gauge, Loader2, OctagonX,
   ShieldCheck, Sparkles, UserCheck,
 } from "lucide-react";
 
@@ -517,5 +517,3 @@ function EventSheet({ event, onClose }: { event: RiskEvent | null; onClose: () =
     </Sheet>
   );
 }
-
-export { ArrowDown };

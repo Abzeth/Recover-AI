@@ -15,6 +15,7 @@ import {
 
 const nav = [
   { to: "/app", label: "Overview", icon: LayoutDashboard, exact: true },
+  { to: "/app/recovery", label: "Recovery Run", icon: Sparkles, exact: false },
   { to: "/app/failed-payments", label: "Failed Payments", icon: CreditCard, exact: false },
   { to: "/app/checkouts", label: "Checkout Recovery", icon: ShoppingCart, exact: false },
   { to: "/app/subscriptions", label: "Subscriptions", icon: Repeat, exact: false },
@@ -22,6 +23,7 @@ const nav = [
   { to: "/app/analytics", label: "Analytics", icon: BarChart3, exact: false },
   { to: "/app/settings", label: "Settings", icon: Settings, exact: false },
 ] as const;
+
 
 
 export function AppShell() {
